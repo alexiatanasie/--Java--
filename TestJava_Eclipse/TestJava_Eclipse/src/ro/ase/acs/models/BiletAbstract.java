@@ -2,7 +2,7 @@ package ro.ase.acs.models;
 
 import ro.ase.acs.contracts.Cumparabil;
 
-public abstract class BiletAbstract implements Cumparabil{
+public abstract class BiletAbstract implements Cumparabil, Cloneable{
 	protected String plecare;
 	protected String sosire;
 	protected int distanta;
@@ -28,8 +28,17 @@ public abstract class BiletAbstract implements Cumparabil{
 
 	@Override
 	public float getPret() {
-		return 0;
+		return 3;
 	}
 	public abstract float getReducere();
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		BiletAbstract copy=(BiletAbstract)super.clone();
+		copy.distanta=this.distanta;
+		copy.sosire=this.sosire;
+		copy.plecare=this.plecare;
+		return copy;
+	}
+	
 }
