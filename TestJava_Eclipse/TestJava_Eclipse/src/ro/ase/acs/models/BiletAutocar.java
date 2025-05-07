@@ -1,6 +1,7 @@
 package ro.ase.acs.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,29 +23,31 @@ public class BiletAutocar extends BiletAbstract implements Cloneable{
 		}
 	}
 	public String[] getStatii() {
-		return statii;
+		if(statii!=null) {
+			return Arrays.copyOf(statii,statii.length);
+		}
+		else {
+			return null;
+		}
+	
 	}
 	public void setStatii(String[] statii) {
-		this.statii = statii;
+		if(statii!=null) {
+			this.statii=Arrays.copyOf(statii,statii.length);
+			
+		}else {
+			this.statii=null;
+		}
+		
 	}
 	public TipReducere getTipReducere() {
 		return tipReducere;
 	}
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		BiletAutocar copy=(BiletAutocar)super.clone();
-		copy.distanta=this.distanta;
-		copy.plecare=this.plecare;
-		copy.sosire=this.sosire;
-		if(this.statii!=null) {
-			copy.statii=this.statii.clone();
-		}
-		return copy;
-	}
+	
 	@Override
 	public float getPret() {
-		float pretul=5;
-		return pretul*distanta*(1-getReducere());
+		
+		return super.getPret()*distanta*(1-getReducere());
 	}
 	@Override
 	public String toString() {
@@ -59,20 +62,13 @@ public class BiletAutocar extends BiletAbstract implements Cloneable{
 	public static Collection<BiletAutocar> bileteEmise(){
 		return bileteEmise;
 	}
+
 	@Override
-	public String getPlecare() {
-		// TODO Auto-generated method stub
-		return super.getPlecare();
-	}
-	@Override
-	public String getSosire() {
-		// TODO Auto-generated method stub
-		return super.getSosire();
-	}
-	@Override
-	public int getDistanta() {
-		// TODO Auto-generated method stub
-		return super.getDistanta();
+	public Object clone() throws CloneNotSupportedException {
+		BiletAutocar copy=(BiletAutocar)super.clone();
+		copy.tipReducere=this.tipReducere;
+		copy.setStatii(statii);
+		return copy;
 	}
 
 
